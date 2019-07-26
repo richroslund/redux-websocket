@@ -242,6 +242,15 @@ describe('ReduxWebSocket', () => {
       expect(sendMock).toHaveBeenCalledTimes(1);
       expect(sendMock).toHaveBeenCalledWith('{"test":"value"}');
     });
+    it('should send a string message', () => {
+      const action = { type: 'SEND', payload: { url } };
+
+      reduxWebSocket.connect(store, action as Action);
+      reduxWebSocket.send(null as any, { payload: "hello world!" } as any);
+
+      expect(sendMock).toHaveBeenCalledTimes(1);
+      expect(sendMock).toHaveBeenCalledWith("hello world!");
+    });
 
     it('should throw an error if no connection exists', () => {
       expect(() => reduxWebSocket.send(null as any, { payload: null } as any))

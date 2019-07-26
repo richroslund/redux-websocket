@@ -101,7 +101,8 @@ export default class ReduxWebSocket {
    */
   send = (_store: MiddlewareAPI, { payload }: Action) => {
     if (this.websocket) {
-      this.websocket.send(JSON.stringify(payload));
+      const payloadString = typeof payload === 'string' ? payload : JSON.stringify(payload);
+      this.websocket.send(payloadString);
     } else {
       throw new Error(
         'Socket connection not initialized. Dispatch WEBSOCKET_CONNECT first',
